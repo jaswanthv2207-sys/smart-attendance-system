@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Factory Attendance Dashboard</title>
+
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <div class="container">
+      <!-- TOP TAG -->
+
+      <div class="top-tag">REAL-TIME SHIFT CHECK-IN</div>
+
+      <!-- HEADER -->
+
+      <div class="header">
+        <div>
+          <h1>
+            Factory Attendance
+            <span>• Live Dashboard</span>
+          </h1>
+
+          <p>
+            Tracks employee check-in/out in real-time so floor managers can spot
+            absentee patterns early and protect throughput.
+          </p>
+
+          <div class="chips">
+            <span>Factories & Support Centers</span>
+            <span>Absentee Detection</span>
+            <span>Future: Predictive Absentee Spikes</span>
+          </div>
+        </div>
+
+        <div class="live-box">
+          <span class="green-dot"></span>
+
+          Live •
+          <span id="clock"></span>
+
+          <span id="refreshCounter"> 15s </span>
+        </div>
+      </div>
+
+      <!-- TOP SECTION -->
+
+      <div class="top-section">
+        <!-- LEFT PANEL -->
+
+        <div class="left-panel">
+          <div class="stats-row">
+            <div class="stat-card">
+              <div class="stat-header">
+                <span>Total workforce</span>
+
+                <span class="badge"> Master Sheet </span>
+              </div>
+
+              <h2 id="totalEmployees">0</h2>
+
+              <small> From Employees tab </small>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-header">
+                <span>Present now</span>
+
+                <span class="badge"> Live IN </span>
+              </div>
+
+              <h2 id="presentEmployees">0</h2>
+
+              <small> Last IN status today </small>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-header">
+                <span>Absent / not IN</span>
+
+                <span class="badge"> Gaps </span>
+              </div>
+
+              <h2 id="absentEmployees">0</h2>
+
+              <small> Expected - Present </small>
+            </div>
+          </div>
+
+          <div class="overview-panel">
+            <div class="overview-header">
+              <h3>Live Attendance Overview</h3>
+
+              <div class="overview-badge">Live Monitoring</div>
+            </div>
+
+            <div class="chart-area">
+              <div class="chart-grid"></div>
+
+              <div class="chart-bars" id="attendanceChart"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT PANEL -->
+
+        <div class="check-panel">
+          <h2>Quick check-in / out</h2>
+
+          <p>
+            Scan badge or type Employee ID to mark IN / OUT and instantly update
+            the dashboard.
+          </p>
+
+          <div class="input-grid">
+            <div>
+              <label>Employee ID</label>
+
+              <input type="text" id="empId" placeholder="Enter Employee ID" />
+            </div>
+
+            <div>
+              <label>Name</label>
+
+              <input
+                type="text"
+                id="empName"
+                placeholder="Auto-filled"
+                readonly
+              />
+            </div>
+          </div>
+
+          <label>Shift</label>
+
+          <select id="shift">
+            <option>Morning</option>
+            <option>Evening</option>
+            <option>Night</option>
+          </select>
+
+          <div class="button-row">
+            <button class="checkin-btn" onclick="checkIn()">Check-IN</button>
+
+            <button class="checkout-btn" onclick="checkOut()">Check-OUT</button>
+          </div>
+
+          <div id="message"></div>
+        </div>
+      </div>
+
+      <!-- SHIFT SECTION -->
+
+      <div class="section">
+        <div class="section-header">
+          <h2>Shift coverage overview</h2>
+
+          <div class="legend">
+            <span class="present-dot"></span>
+            Present
+
+            <span class="absent-dot"></span>
+            Absent
+          </div>
+        </div>
+
+        <div id="shiftCoverage"></div>
+      </div>
+
+      <!-- EMPLOYEE TABLE -->
+      <div class="section">
+        <div class="table-header">
+          <h2>Employee Management</h2>
+        </div>
+
+        <div class="employee-form">
+          <input type="text" id="newEmpId" placeholder="Employee ID" />
+
+          <input type="text" id="newEmpName" placeholder="Employee Name" />
+
+          <select id="newEmpShift">
+            <option>Morning</option>
+            <option>Evening</option>
+            <option>Night</option>
+          </select>
+
+          <button class="add-employee-btn" onclick="addEmployee()">
+            Add Employee
+          </button>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="table-header">
+          <h2>Employee status (today)</h2>
+
+          <input type="text" placeholder="Search by name / ID..." id="search" />
+        </div>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Employee</th>
+              <th>ID</th>
+              <th>Shift</th>
+              <th>Status</th>
+              <th>Last movement</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+
+          <tbody id="employeeTable"></tbody>
+        </table>
+      </div>
+
+      <div class="footer">
+        <div>Auto-refresh every 15 seconds</div>
+
+        <div>
+          Built on Google Sheets + Apps Script for real-time visibility.
+        </div>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
